@@ -126,20 +126,27 @@ public:
 
 			triangle triProjected, triTranslated, triRotatedZ, triRotatedZX;
 
+
+			// Rotate on Z-Axis
 			MultiplyMatrixVector(tri.p[0], triRotatedZ.p[0], matRotZ);
 			MultiplyMatrixVector(tri.p[1], triRotatedZ.p[1], matRotZ);
 			MultiplyMatrixVector(tri.p[2], triRotatedZ.p[2], matRotZ);
 
+			// Rotate on X-Axis
 			MultiplyMatrixVector(triRotatedZ.p[0], triRotatedZX.p[0], matRotX);
 			MultiplyMatrixVector(triRotatedZ.p[1], triRotatedZX.p[1], matRotX);
 			MultiplyMatrixVector(triRotatedZ.p[2], triRotatedZX.p[2], matRotX);
 
-
+			// Offset into the screen
 			triTranslated = triRotatedZX;
 			triTranslated.p[0].z = triRotatedZX.p[0].z + 3.0f;
 			triTranslated.p[1].z = triRotatedZX.p[1].z + 3.0f;
 			triTranslated.p[2].z = triRotatedZX.p[2].z + 3.0f;
 
+			vec3d normal, line1, line2;
+			line1.x = triTranslated.p[1].x;
+
+			// Turn triangle from 3D --> 2D
 			MultiplyMatrixVector(triTranslated.p[0], triProjected.p[0], matProj);
 			MultiplyMatrixVector(triTranslated.p[1], triProjected.p[1], matProj);
 			MultiplyMatrixVector(triTranslated.p[2], triProjected.p[2], matProj);
